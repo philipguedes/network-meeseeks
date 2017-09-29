@@ -99,3 +99,13 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# old project
+*-old/
+
+# node and bower
+node_modules
+dist
+.tmp
+.sass-cache
+bower_components
