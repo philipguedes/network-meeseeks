@@ -1,0 +1,37 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="components/status-card.html"> 
+
+
+<dom-module id="main-app">
+  <template>
+    <style>
+      :host {
+        font-family: sans-serif;
+      }
+      .flex-horizontal {
+        @apply --layout-horizontal;
+      }
+    </style>
+    <h1>Monitor Dashboard</h1>
+
+    <div class="flex-horizontal">
+      <status-card element-name="gamming"></status-card>
+      <status-card element-name="hls"></status-card>
+    </div>
+    <div class="flex-horizontal">
+      <status-card element-name="dash"></status-card>
+      <status-card element-name="voip"></status-card>
+    </div>
+
+  </template>
+
+  <script>
+    class App extends Polymer.Element {
+      static get is() { return 'main-app' }
+      
+    }
+    customElements.define(App.is, App);
+    </script>
+</dom-module>

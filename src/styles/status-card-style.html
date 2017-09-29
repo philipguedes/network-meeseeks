@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+
+
+<dom-module id='my-colors'>
+  <template>
+    <style>
+      paper-card {
+        @apply --layout-vertical;
+        
+      }
+      paper-card.gamming {
+        /*azul*/
+        background-color: #212121;
+      }
+      paper-card.voip {
+        background-color: #1B5E20;
+      }
+      paper-card.hls {
+        background-color: #1A237E;
+      }
+      paper-card.dash {
+        background-color: #B71C1C;
+      }
+      .flex-horizontal {
+        @apply --layout-horizontal;
+      }
+      .flex-vertical {
+        @apply --layout-vertical;
+      }
+      .flex {
+        @apply --layout-flex;
+      }
+      .card-header {
+        padding: 8px;
+      }
+    </style>
+  </template>
+</dom-module>
