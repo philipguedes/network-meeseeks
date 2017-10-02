@@ -1,0 +1,5 @@
+zerorpc
+pytest
+requests
+ipython
+pytest-cov
