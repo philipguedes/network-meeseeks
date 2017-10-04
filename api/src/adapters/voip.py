@@ -18,7 +18,7 @@ class VoipAdapter(BaseAdapter):
 
         self.__data = {
             'content': content,
-            'updated': updated
+            'last_update': updated
         }
 
     def get_data(self):
