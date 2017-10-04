@@ -31,5 +31,3 @@ class BaseAdapter(object):
         plr_sqrt = num/den
         plr = math.pow(plr_sqrt, 2)
         return plr
-
-

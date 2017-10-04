@@ -71,7 +71,7 @@ class NeubotService(object):
                 'goodput': elem['download_speed'],
                 'upload': elem['upload_speed'],
                 'latency': elem['latency'],
-                'connect_time': elem['connect_time']
+                'rtt': elem['connect_time']
             }
         return dataset
         
