@@ -1,0 +1,69 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/notification-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+
+<dom-module id="presenter-component">
+  <template>
+    <style>
+      :host {
+        font-family: sans-serif;
+      }
+      paper-card {
+        /* height: 600px; */
+        /* width: 600px; */
+        margin: 16px;
+      }
+      card-content {
+        align-content: center;
+        height: 600px;
+        width: 600px;
+      }
+      h2 {
+        margin: 0.37em;
+      }
+    </style>
+    
+    <paper-card style="height:800px; width: 800px;">
+      <div class="card-header">
+        <h2>Grafico</h2>
+      </div>
+      <div class="card-content">
+        <iframe src="./api/voip.html" style="height:600px; width: 600px;"></iframe>
+        <p>Alguma informação relevante para o usuário</p>
+      </div>
+    </paper-card>
+
+  </template>
+  <!-- <script src="../utils.js"></script> -->
+  <script>
+    class PresenterComponent extends Polymer.Element {
+      static get is() { return 'presenter-component' }
+      static get properties () {
+        return {
+        //   elementName: {
+        //     type: String
+        //   },
+        //   elementTitle: {
+        //     type: String,
+        //     computed: 'getTitle(elementName)'
+        //   },
+        //   elementIcon: {
+        //     type: String,
+        //     computed: 'getIcon(elementName)'
+        //   },
+        //   elementTips: {
+        //     type: String,
+        //     computed: 'getTips(elementName)'
+        //   },
+          
+        }
+      }
+
+    }
+    customElements.define(PresenterComponent.is, PresenterComponent);
+  </script>
+</dom-module>

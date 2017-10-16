@@ -6,7 +6,7 @@ var elementData = {
     "title": "Gamming",
     "tips": "League of Legends, Dota 2"
   },
-  hls: {
+  lstreaming: {
     "icon": "notification:live-tv",
     "title": "Streaming",
     "tips": "Twitch.tv, Youtube (Live)"

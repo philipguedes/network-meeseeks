@@ -1,9 +1,11 @@
+import os
 import math
 from src.services.neubot import NeubotService
+from src.services.graphics import GraphicsService
 
 
-C = 0.93
-MSS = 1460
+C = os.getenv('C_CONSTANT', 0.93)
+MSS = os.getenv('MSS_CONSTANT', 1460)
 
 class BaseAdapter(object):
     """
@@ -21,6 +23,7 @@ class BaseAdapter(object):
     
     def __init__(self):
         self.service = NeubotService()
+        self.graphics = GraphicsService()
 
     def packet_loss(self, goodput, rtt):
         """
@@ -31,3 +34,17 @@ class BaseAdapter(object):
         plr_sqrt = num/den
         plr = math.pow(plr_sqrt, 2)
         return plr
+
+    def get_data(self):
+        data = self.service.speedtest_data()
+        for _,elem in data.items():
+            goodput = elem['goodput']
+            rtt = elem['rtt']
+            plr = self.packet_loss(goodput, rtt)
+            elem['packet_loss_rate'] = plr
+        return data
+
+    def get_recent_data(self):
+        data = self.get_data()
+        most_recent = max(data, key=int)
+        return most_recent, data[most_recent]
