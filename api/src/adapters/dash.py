@@ -6,7 +6,7 @@ from src.adapters import BaseAdapter
 BYTES_TO_MEGABITS = 128 * 1024 
 
 
-class LStreamingAdapter(BaseAdapter):
+class DashAdapter(BaseAdapter):
     def __init__(self):
         BaseAdapter.__init__(self)
         self.__data = None
@@ -16,7 +16,6 @@ class LStreamingAdapter(BaseAdapter):
         return self.__data
 
     def update_data(self):
-        
         content = self.get_data()
         # updated = arrow.utcnow().timestamp
         updated = None
@@ -41,4 +40,3 @@ class LStreamingAdapter(BaseAdapter):
         path = self.graphics.render_figure([trace])
         print('done')
         return path
-    

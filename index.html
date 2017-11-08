@@ -17,13 +17,16 @@
       }
     </style>
   </head>
+
+  <script>
+    var api = require('./renderer.js');
+    // var api = new ApiController();
+    var translation = require('./translation.json');
+
+  </script>
+
   <body>
     <rss-app></rss-app>
     <!-- <main-app></main-app> -->
   </body>
-
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js');
-  </script>
 </html>

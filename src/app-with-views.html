@@ -15,6 +15,7 @@
 <link rel="import" href="my-view2.html">
 <link rel="import" href="main-view.html">
 <link rel="import" href="./components/presenter-component.html">
+<link rel="import" href="./components/gaming-component.html">
 <!-- <link rel="lazy-import" href="my-view404.html"> -->
 
 
@@ -55,8 +56,8 @@
     <app-location use-hash-as-path route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}"></app-route>
 
-    <app-drawer-layout fullbleed>
-      <app-drawer id="drawer" slot="drawer" swipe-open>
+    <!-- <app-drawer-layout fullbleed> -->
+      <!-- <app-drawer id="drawer" slot="drawer" swipe-open>
         <app-toolbar>Menu</app-toolbar>
         
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
@@ -64,16 +65,24 @@
           <a name="presenter-component" href="#/presenter-component">Presenter</a>
         </iron-selector>
       
-      </app-drawer>
+      </app-drawer> -->
 
       <app-header-layout has-scrolling-region>
         <app-header fixed>
           <app-toolbar>
-              <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+              <template is="dom-if" if="[[back]]">
+
+
+
+                <paper-icon-button icon="arrow-back" on-tap="backMainPage"></paper-icon-button>
+
+              </template>
+              
               <div main-title>Mr. Meeseeks</div>
+<!--               
               <paper-icon-button icon="delete"></paper-icon-button>
               <paper-icon-button icon="search"></paper-icon-button>
-              <paper-icon-button icon="close"></paper-icon-button>
+              <paper-icon-button icon="close"></paper-icon-button> -->
           </app-toolbar>
         </app-header>
 
@@ -83,10 +92,14 @@
           fallback-selection="view404"
           role="main">
           
+          <!-- <main-view name='main-view' voip=[[voip]] dash=[[dash]] lstreaming=[[lstreaming]] gaming=[[gaming]]></main-view> -->
           <main-view name='main-view'></main-view>
-          <presenter-component name='presenter-component'></presenter-component>
-          <my-view1 name="my-view1"></my-view1>
-          <my-view2 name="my-view2"></my-view2>
+          <presenter-component name='voip-detail'></presenter-component>
+          <presenter-component name='dash-detail'></presenter-component>
+          <presenter-component name='lstreaming-detail'></presenter-component>
+          <gaming-component name='gaming-component'></gaming-component>
+          <!-- <my-view1 name="my-view1"></my-view1>
+          <my-view2 name="my-view2"></my-view2> -->
         </iron-pages>
         
       </app-header-layout>
@@ -94,39 +107,119 @@
 </div>
     
       
-    </app-drawer-layout>
+    <!-- </app-drawer-layout> -->
   </template>
   <script>
+
     class RSSApp extends Polymer.Element {
       static get is() { return 'rss-app' }
       static get properties() {
         return {
-          page: {
-            type: String
-          },
-          articles: {
-            type: Array,
+          // voip: {
+          //   type: String,
+          //   notify: true
+          // },
+          // dash: {
+          //   type: String,
+          //   notify: true
+          // },
+          // gaming: {
+          //   type: String,
+          //   notify: true
+          // },
+          // lstreaming: {
+          //   type: String,
+          //   notify: true
+          // },
+          images: {
+            type: Object,
             notify: true
           },
-          feeds: {
-            type: Array,
+          back: {
+            type: Boolean,
+            notify: true,
+            computed: '_mainPage(page)'
+          },
+          page: {
+            type: String,
             notify: true
           }
         }
       }
       static get observers() {
         return [
-          '_routePageChanged(routeData.page)'
+          '_routePageChanged(routeData.page)',
+          '_mainPage(page)'
         ]
       }
+
+      // static get listeners () {
+      //   return [
+      //     {'teste': '_mytest'}
+      //   ]
+      // }
+
       ready() {
         super.ready();
         window.location.hash = window.location.hash || "#/main-view";
+        console.log(api);
+        this.addEventListener('update', e => this._prepareUpdate(e));
+        this._loadImages()
+        console.log(this.routeData)
       }
       
+      // _loadStatistics() {
+      //   api.loadStatistics().then((res) => {
+      //     this.set('last_update', res['last_update']);
+      //     this.set('voip', res['voip']);
+      //     this.set('gaming', res['gaming']);
+      //     this.set('dash', res['dash']);
+      //     this.set('lstreaming', res['lstreaming']);
+      //   });
+      // }
+
+      _loadImages() {
+        api.getImages().then((res) => {
+          console.log('hello')
+          console.log(res)
+          this.set(images, res);
+        });
+      }
+
+      _prepareUpdate(e) {
+        var data = e.detail;
+
+
+        this.set('page', data['page']);
+
+        console.log('this is my test yay')
+        console.log(e)
+        this.set('page', 'gaming-component')
+        // this._loadStatistics()
+        // this.set('page', 'presenter-component')
+      }
+
       _routePageChanged(p) {
           console.log('oi')
-        this.page = p;
+        this.set('page', p);
+      }
+
+      _mainPage(page) {
+        console.log(page)        
+        if (page != 'main-view'){
+          return true
+        }
+        return false
+      }
+
+      backMainPage() {
+        this.set('page', 'main-view')
+      }
+
+      getImages(componentName) {
+        
+
+
       }
     }
     customElements.define(RSSApp.is, RSSApp);

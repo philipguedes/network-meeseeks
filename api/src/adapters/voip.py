@@ -1,4 +1,5 @@
 import collections
+import os
 from datetime import datetime as dt
 from src.adapters import BaseAdapter
 
@@ -9,7 +10,7 @@ BYTES_TO_MEGABITS = 128 * 1024
 class VoipAdapter(BaseAdapter):
     def __init__(self):
         BaseAdapter.__init__(self)
-        self.__data = None
+        self.__figure = None
 
     @property
     def data(self):
@@ -18,39 +19,52 @@ class VoipAdapter(BaseAdapter):
     def update_data(self):
         content = self.get_data()
         # updated = arrow.utcnow().timestamp
-        updated = None
+        updated = dt.now()
 
+        print('hello my friend')
         self.__data = {
             'content': content,
-            'last_update': updated
+            'last_update': updated.isoformat(),
+            'figure': self.get_figure()
         }
 
-    def get_data(self):
-        data = self.service.speedtest_data()
-        for _,elem in data.items():
-            goodput = elem['goodput']
-            rtt = elem['rtt']
-            plr = self.packet_loss(goodput, rtt)
-            elem['packet_loss_rate'] = plr
+    def get_figure(self):
+        if self.__figure is None:
+            return self.__get_figure_updated()
+        print('figure is not None: ' + str(self.__figure))
+        return self.__figure
 
-        return data
+    def __get_figure_updated(self):
+        print('updating figure...')
+        
 
-    def get_recent_data(self):
         data = self.get_data()
-        most_recent = max(data, key=int)
-        return most_recent, data[most_recent]
-
-    def update_plot(self):
-        data = self.get_data()
-        x = []
-        y = []
+        x, y = [], []
 
         od = collections.OrderedDict(sorted(data.items()))
         for timestamp, elem in od.items():
             x.append(dt.fromtimestamp(timestamp))
-            y.append(elem['goodput']/BYTES_TO_MEGABITS)
+            y.append(elem['packet_loss_rate'])
 
         trace = self.graphics.scatter_trace(x, y)
-        path = self.graphics.render_figure([trace], 'voip')
-        print('done')
-        return path
+        self.__figure = self.graphics.render_figure([trace])
+
+        print('updated!')
+        print('new figure: ' + str(self.__figure))
+        return self.__figure
+
+
+        # data = self.get_data()
+        # x = []
+        # y = []
+
+        # od = collections.OrderedDict(sorted(data.items()))
+        # for timestamp, elem in od.items():
+        #     x.append(dt.fromtimestamp(timestamp))
+        #     y.append(elem['goodput']/BYTES_TO_MEGABITS)
+
+        # trace = self.graphics.scatter_trace(x, y)
+        # path = self.graphics.render_figure([trace])
+        # print('done')
+        # return path
+        

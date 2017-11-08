@@ -3,15 +3,15 @@ from src.adapters.voip import VoipAdapter
 
 
 VOIP_STATES = {
-    "0": "error=1",
-    "A": "freeze=1",
-    "B": "delay=1",
-    "C": "connect_issue=1",
-    "D": "freeze=1&delay=1",
-    "E": "freeze=1&connect_issue=1",
-    "F": "delay=1&connect_issue=1",
-    "G": "freeze=1&delay=1&connect_issue=1",
-    "H": ""
+    "0": "error",
+    "A": "freeze",
+    "B": "delay",
+    "C": "connect_issue",
+    "D": "freeze&delay",
+    "E": "freeze&connect_issue",
+    "F": "delay&connect_issue",
+    "G": "freeze&delay&connect_issue",
+    "H": "ok"
 }
 
 class VoipStateMachine(object):
@@ -93,7 +93,7 @@ class VoipStateMachine(object):
         """
         Returns True if PLR > 1%
         """
-        return self.recent_data['packet_loss_rate'] > 0.01:
+        return self.recent_data['packet_loss_rate'] > 0.01
 
     def delay(self):
         """
@@ -101,8 +101,11 @@ class VoipStateMachine(object):
         """
         return self.recent_data['latency'] > 300
 
-    def connect_issues(self):
+    def connect_issue(self):
         """
         Returns True if bandwidth (upload/download) < 100kbps (convert to kbps)
         """
         return self.recent_data['goodput'] < 100
+
+    def get_figure(self):
+        return self.adapter.get_figure()

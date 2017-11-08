@@ -20,23 +20,58 @@
     <h1>Monitor Dashboard</h1>
 
     <div class="flex-horizontal">
-      <status-card element-name="gamming"></status-card>
-      <status-card element-name="lstreaming"></status-card>
+      <status-card element-name="gaming" status=[[gaming]]></status-card>
+      <status-card element-name="lstreaming" status=[[lstreaming]]></status-card>
     </div>
     <div class="flex-horizontal">
-      <status-card element-name="dash"></status-card>
-      <status-card element-name="voip"></status-card>
+      <status-card element-name="dash" status=[[dash]]></status-card>
+      <status-card element-name="voip" status=[[voip]]></status-card>
     </div> 
 
   </template>
 
   <script>
     class ViewApp extends Polymer.Element {
+
       static get is() { return 'main-view' }
       
       static get properties() {
         return {
+          voip: {
+            type: String,
+            notify: true
+          },
+          dash: {
+            type: String,
+            notify: true
+          },
+          gaming: {
+            type: String,
+            notify: true
+          },
+          lstreaming: {
+            type: String,
+            notify: true
+          }
         }
+      }
+
+      ready() {
+        super.ready();
+        this._loadStatistics();
+        console.log('main app ready')
+
+        console.log(api);
+      }
+      
+      _loadStatistics() {
+        api.loadStatistics().then((res) => {
+          this.set('last_update', res['last_update']);
+          this.set('voip', res['voip']);
+          this.set('gaming', res['gaming']);
+          this.set('dash', res['dash']);
+          this.set('lstreaming', res['lstreaming']);
+        });
       }
     }
     customElements.define(ViewApp.is, ViewApp);

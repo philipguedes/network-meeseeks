@@ -1,9 +1,9 @@
 // TODO: Translator
 
 var elementData = {
-  gamming: {
+  gaming: {
     "icon": "hardware:videogame-asset",
-    "title": "Gamming",
+    "title": "Gaming",
     "tips": "League of Legends, Dota 2"
   },
   lstreaming: {

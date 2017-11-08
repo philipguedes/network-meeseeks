@@ -1,0 +1,56 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+
+
+
+<dom-module id="gaming-component">
+  <template>
+    <style>
+      :host {
+        font-family: sans-serif;
+      }
+      paper-card {
+        height: 800px;
+        width: 800px;
+        margin: 16px;
+      }
+      card-content {
+        align-content: center;
+        height: 600px;
+        width: 600px;
+      }
+      h2 {
+        margin: 0.37em;
+      }
+    </style>
+    
+    <paper-card>
+      <div class="card-header">
+        <h2>Gaming</h2>
+      </div>
+      <div class="card-content">
+        <iframe src="./api/voip.html" style="height:600px; width: 600px;"></iframe>
+        <p>Alguma informação relevante para o usuário</p>
+      </div>
+    </paper-card>
+   </template>
+  <script>
+    class GamingComponent extends Polymer.Element {
+      static get is() { return 'gaming-component'; }
+      static get properties() {
+      }
+    }
+    customElements.define(GamingComponent.is, GamingComponent);
+  </script>
+</dom-module>

@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../styles/status-card-style.html">
 
 
@@ -38,20 +39,27 @@
         <span style="font-style: italic">[[elementTips]]</span>
       </div>
       <div class="card-content flex" style="background-color:#f5f5f5">
-        <!-- <iframe src="./src/components/simple-connectgaps.html"></iframe> -->
-        Resumo das informações obtidas
+        
+        <span>Resumo das informações obtidas:</span>
+
+        
+        <p>[[sample]]</p>
+      </div>
+      <div>
+        <paper-button raised on-tap="clicked">view more</paper-button>
       </div>
     </paper-card>
 
   </template>
-  <script src="../utils.js"></script>
+  <script src="../js/utils.js"></script>
   <script>
     class StatusCard extends Polymer.Element {
       static get is() { return 'status-card' }
       static get properties () {
         return {
           elementName: {
-            type: String
+            type: String,
+            notify: true
           },
           elementTitle: {
             type: String,
@@ -67,25 +75,66 @@
           },
           data: {
             type: Object
+          },
+          status: {
+            type: String,
+            notify: true
+          },
+          sample: {
+            type: String,
+            computed: 'getSample(status)'
+          },
+          route: {
+            type: String,
+            computed: '_routeName(elementName)',
+            notify: true
           }
         }
       }
 
+      ready() {
+        super.ready();
+        // console.log('hey')
+      }
+    
+      clicked() {
+        this.dispatchEvent(new CustomEvent(
+          'update', 
+          {
+            bubbles: true, 
+            composed: true,
+            detail: {
+              'page': this.route,
+              'status': this.status
+            
+            }
+          }
+        ));
+        console.log(this.route)
+      }
+
+      _routeName(elementName) {
+        return elementName + '-component';
+      }
+
       getIcon(elementName) {
-        console.log(elementData[elementName]['icon']);
+        // console.log(elementData[elementName]['icon']);
         return elementData[elementName]['icon'];
       }
 
       getTitle(elementName) {
-        console.log(elementData[elementName]['title']);
+        // console.log(elementData[elementName]['title']);
         return elementData[elementName]['title'];
       }
 
       getTips(elementName) {
-        console.log(elementData[elementName]['tips']);
+        // console.log(elementData[elementName]['tips']);
         return elementData[elementName]['tips'];
       }
 
+      getSample(status) {
+        return translation[this.elementName]['pt'][status]['message']
+      }
 
     }
     customElements.define(StatusCard.is, StatusCard);

@@ -21,6 +21,8 @@ function createWindow () {
   
   mainWindow = new BrowserWindow({width: 1000, height: 800});
 
+  console.log(__dirname);
+  
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',

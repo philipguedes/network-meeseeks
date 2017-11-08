@@ -1,0 +1,90 @@
+{
+    "gaming": {
+        "pt": {
+            "latency": {
+                "message": "Seu jogo pode estar com lag."
+            },
+            "freeze": {
+                "message": "É provável que você seja desconectado do jogo a qualquer momento. Se estiver utilizando WiFi, tente conectar um cabo."
+            },
+            "ok": {
+                "message": "Não foram detectados problemas na sua conexão. Bom jogo!"
+            },
+            "error": {
+                "message": "Erro inesperado."
+            }
+        }
+    },
+    "lstreaming": {
+        "pt": {
+            "error": {
+                "message": "Erro inesperado."
+            },
+            "freeze": {
+                "message": "Você deve encontrar dificuldades em realizar uma transmissão ao vivo. Muito provavelmente seus espectadores não conseguirão te ver. Se estiver utilizando WiFi, tente conectar um cabo."
+            },
+            "1440": {
+                "message": "Você pode realizar uma transmissão ao vivo de alta definição (1440p)"
+            },
+            "1080": {
+                "message": "Você pode realizar uma transmissão ao vivo de alta definição (1080p)"
+            },
+            "720": {
+                "message": "Você pode realizar uma transmissão ao vivo de alta definição (720p)"
+            },
+            "480": {
+                "message": "Você pode realizar uma transmissão ao vivo de qualidade padrão (480p)"
+            },
+            "360": {
+                "message": "Você pode realizar uma transmissão ao vivo de baixa qualidade (360p)"
+            },
+            "240": {
+                "message": "Você pode realizar uma transmissão ao vivo de baixa qualidade (240p)"
+            }
+        }
+    },
+    "voip": {
+        "pt": {
+            "freeze": {
+                "message": "A chamada pode apresentar travamentos."
+            },
+            "delay": {
+                "message": "A chamada pode apresentar atraso entre os participantes."
+            },
+            "connect_issue": {
+                "message": "A chamada pode cair."
+            },
+            "ok": {
+                "message": "Não foram detectados problemas na sua conexão. Você pode fazer chamadas sem problemas!"
+            },
+            "error": {
+                "message": "Erro inesperado."
+            }
+        }
+    },
+    "dash": {
+        "pt": {
+            "error": {
+                "message": "Erro inesperado."
+            },
+            "impossible": {
+                "message": "Sua velocidade está abaixo da velocidade mínima para assistir um vídeo"
+            },
+            "minimum": {
+                "message": "Você conseguirá assistir vídeos em qualidade baixa, porém com uma certa instabilidade"
+            },
+            "recommended": {
+                "message": "Você conseguirá assistir vídeos de qualidade mais baixa sem travamentos"
+            },
+            "sd": {
+                "message": "Você conseguirá assistir vídeos em boa qualidade"
+            },
+            "hd": {
+                "message": "Você conseguirá assistir vídeos em alta definição (HD)"
+            },
+            "ultra": {
+                "message": "Você conseguirá assistir vídeos em Ultra HD"
+            }
+        }
+    }
+}

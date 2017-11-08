@@ -3,14 +3,14 @@ from src.adapters.lstreaming import LStreamingAdapter
 
 
 LS_STATES = {
-    "0": "error=1",
-    "A": "freeze=1",
-    "B": "1440=1",
-    "C": "1080=1",
-    "D": "720=1",
-    "E": "480=1",
-    "F": "360=1",
-    "G": "240=1"
+    "0": "error",
+    "A": "freeze",
+    "B": "1440",
+    "C": "1080",
+    "D": "720",
+    "E": "480",
+    "F": "360",
+    "G": "240"
 }
 
 class LStreamingStateMachine(object):
@@ -24,43 +24,43 @@ class LStreamingStateMachine(object):
     transitions = [
         {'trigger': 'update',
             'source': '*',
-            'dest': VOIP_STATES['A'],
+            'dest': LS_STATES['A'],
             'conditions': ['freeze']},
         {'trigger': 'update',
             'source': '*',
-            'dest': VOIP_STATES['B'],
+            'dest': LS_STATES['B'],
             'conditions': ['up_to_1440']},
         {'trigger': 'update',
             'source': '*',
-            'dest': VOIP_STATES['C'],
+            'dest': LS_STATES['C'],
             'conditions': ['up_to_1080'],
             'unless': [
                 'freeze',
                 'up_to_1440']},
         {'trigger': 'update',
             'source': '*',
-            'dest': VOIP_STATES['D'],
+            'dest': LS_STATES['D'],
             'conditions': ['up_to_720'],
             'unless': [
                 'freeze'
                 'up_to_1080']},
         {'trigger': 'update',
             'source': '*',
-            'dest': VOIP_STATES['E'],
+            'dest': LS_STATES['E'],
             'conditions': ['up_to_480'],
             'unless': [
                 'freeze'
                 'up_to_720']},
         {'trigger': 'update',
             'source': '*',
-            'dest': VOIP_STATES['F'],
+            'dest': LS_STATES['F'],
             'conditions': ['up_to_360'],
             'unless': [
-                'up_to_480,
+                'up_to_480',
                 'freeze']},
         {'trigger': 'update',
             'source': '*',
-            'dest': VOIP_STATES['G'],
+            'dest': LS_STATES['G'],
             'conditions': ['up_to_240'],
             'unless': [
                 'freeze',
@@ -87,7 +87,7 @@ class LStreamingStateMachine(object):
         """
         Returns True if PLR > 1%
         """
-        return self.recent_data['packet_loss_rate'] > 0.01:
+        return self.recent_data['packet_loss_rate'] > 0.01
 
     def up_to_1440(self):
         """
