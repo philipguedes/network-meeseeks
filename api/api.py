@@ -3,11 +3,16 @@ import sys
 import zerorpc
 import json
 import tempfile
+from src.utils import get_logger
 from src.adapters.voip import VoipAdapter
 from src.machines.dash import DashStateMachine
 from src.machines.voip import VoipStateMachine
 from src.machines.gaming import GamingStateMachine
 from src.machines.lstreaming import LStreamingStateMachine
+
+
+LOGGER = get_logger(__name__)
+
 
 class NetworkUserApi(object):
     """
@@ -80,7 +85,10 @@ class NetworkUserApi(object):
             'dash': self.dash_machine.state,
             'lstreaming': self.lstreaming_machine.state
         }
-        print(data)
+        
+        LOGGER.debug("Collecting recent data")
+        LOGGER.debug(data)
+        
         return data
 
 
@@ -93,12 +101,12 @@ def main():
         addr = 'tcp://127.0.0.1:' + parse_port()
         s = zerorpc.Server(api)
         s.bind(addr)
-        print('start running on {}'.format(addr))
+        LOGGER.debug('start running on {}'.format(addr))
         s.run()
     except:
         s.close()
     finally:
-        print('Exiting...')
+        LOGGER.debug('Exiting...')
 
 if __name__ == '__main__':
     main()

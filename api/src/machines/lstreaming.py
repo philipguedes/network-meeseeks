@@ -1,6 +1,8 @@
 from transitions import Machine, State
 from src.adapters.lstreaming import LStreamingAdapter
+from src.utils import get_logger
 
+LOGGER = get_logger(__name__)
 
 LS_STATES = {
     "0": "error",
@@ -81,7 +83,7 @@ class LStreamingStateMachine(object):
         Get recent data
         """
         self.recent_time, self.recent_data = self.adapter.get_recent_data()
-        print('Measuring...')
+        LOGGER.debug('Measuring...')
 
     def freeze(self):
         """

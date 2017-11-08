@@ -1,28 +1,29 @@
 import os
 import tempfile
+import logging
 
 
+def get_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
 
-class Graphs(object):
-    def __init__(self):
-        self.__file = None
+    # create file handler which logs info messages
+    fh = logging.FileHandler('foo.log', 'w', 'utf-8')
+    fh.setLevel(logging.INFO)
 
-    @property
-    def path(self):
-        return self.__file.name
+    # create console handler with a debug log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
 
-    def create_tempfile(self):
-        self.__file = tempfile.NamedTemporaryFile(delete=False)
+    # creating a formatter
+    formatter = logging.Formatter('- %(name)s - %(levelname)-8s: %(message)s')
 
-    
-        return 
+    # setting handler format
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
+    # add the handlers to the logger
+    logger.addHandler(fh)
+    logger.addHandler(ch)
 
-def get_path():
-    cwd = os.getcwd()
-    folders = cwd.split(os.sep)
-    
-    folder = '' 
-    while 
+    return logger

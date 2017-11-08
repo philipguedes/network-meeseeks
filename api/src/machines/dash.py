@@ -1,6 +1,9 @@
 from transitions import Machine, State
 from src.adapters.dash import DashAdapter
+from src.utils import get_logger
 
+
+LOGGER = get_logger(__name__)
 
 DASH_STATES = {
     "0": "error",
@@ -65,7 +68,7 @@ class DashStateMachine(object):
         Get recent data
         """
         self.recent_time, self.recent_data = self.adapter.get_recent_data()
-        print('Measuring...')
+        LOGGER.debug('Measuring...')
 
     def less_than_minimum(self):
         # TODO: convert to Megabits/second

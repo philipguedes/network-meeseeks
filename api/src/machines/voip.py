@@ -1,6 +1,9 @@
 from transitions import Machine, State
 from src.adapters.voip import VoipAdapter
+from src.utils import get_logger
 
+
+LOGGER = get_logger(__name__)
 
 VOIP_STATES = {
     "0": "error",
@@ -87,7 +90,7 @@ class VoipStateMachine(object):
         upload > 100 kbps
         """
         self.recent_time, self.recent_data = self.adapter.get_recent_data()
-        print('Measuring...')
+        LOGGER.debug('Measuring...')
 
     def freeze(self):
         """

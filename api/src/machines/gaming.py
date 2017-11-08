@@ -1,6 +1,9 @@
 from transitions import Machine, State
 from src.adapters.gaming import GamingAdapter
+from src.utils import get_logger
 
+
+LOGGER = get_logger(__name__)
 
 GAMING_STATES = {
     "0": "error",
@@ -54,7 +57,7 @@ class GamingStateMachine(object):
         """
         self.recent_time, self.recent_data = self.adapter.get_recent_data()
         self.compute_statistics()
-        print('Measuring...')
+        LOGGER.debug('Measuring...')
 
     def compute_statistics(self):
         data = self.adapter.get_data()

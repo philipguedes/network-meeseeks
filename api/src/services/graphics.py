@@ -3,11 +3,6 @@ import tempfile
 import plotly.offline as py
 import plotly.graph_objs as go
 
-CURRENT_DIR = os.getcwd()
-
-# TODO: resolve path
-DIST_FOLDER = os.getenv('RESOURCES_FOLDER', '/home/philip/dev/network-meeseeks/res')
-
 
 class GraphicsService(object):
     def __init__(self):
