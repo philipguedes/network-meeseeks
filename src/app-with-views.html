@@ -85,6 +85,9 @@
               <paper-icon-button icon="close"></paper-icon-button> -->
           </app-toolbar>
         </app-header>
+      
+      <paper-button raised on-click="_loadImages">oie</paper-button>
+      
 
         <iron-pages
           selected="[[page]]"
@@ -103,7 +106,7 @@
         </iron-pages>
         
       </app-header-layout>
-      <div style="width: 100%; height: 100%;">
+
 </div>
     
       
@@ -179,6 +182,7 @@
       // }
 
       _loadImages() {
+        console.log('loading images..')
         api.getImages().then((res) => {
           console.log('hello')
           console.log(res)

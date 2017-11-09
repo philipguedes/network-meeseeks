@@ -13,13 +13,15 @@
   },
   "dependencies": {
     "async": "^2.3.0",
+    "concurrently": "^3.5.0",
     "lodash": "^4.17.4",
     "rss-parser": "^2.6.1",
     "zerorpc": "^0.9.7"
   },
   "scripts": {
-    "start": "electron .",
-    "build": "electron-packager ."
+    "start": "python ./api/api.py & electron . &",
+    "build": "electron-packager .",
+    "dev": "concurrently \"electron .\" \"python ./api/api.py\""
   },
   "repository": {
     "type": "git",

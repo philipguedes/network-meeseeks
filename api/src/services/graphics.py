@@ -15,12 +15,11 @@ class GraphicsService(object):
     def scatter_trace(self, x_axis, y_axis, **kwargs):
         name = kwargs.get('name', '')
         connectgaps = kwargs.get('connectgaps', True)
-
+        print(kwargs)
         trace = go.Scatter(
             x=x_axis,
             y=y_axis,
-            name=name,
-            connectgaps=connectgaps)
+            **kwargs)
         
         return trace
 
@@ -28,17 +27,21 @@ class GraphicsService(object):
         self.__file = tempfile.NamedTemporaryFile(delete=True, suffix='.html')
         return self.name
     
-    def render_figure(self, traces):
+    def create_layout(self, **kwargs):
+        return go.Layout(**kwargs)
+
+    def render_figure(self, traces, layout=None):
         filename = self.create_tempfile()
         figure = dict(data=traces)
+
+        if layout is not None:
+            figure['layout'] = layout
 
         path = py.plot(
             figure, 
             filename=filename, 
-            auto_open=False,
+            # auto_open=False,
             image_height=480,
             image_width=640)
 
         return path
-
-
