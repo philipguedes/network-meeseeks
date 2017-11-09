@@ -24,7 +24,7 @@ class NetworkUserApi(object):
     def __init__(self):
         self.graph_creator = None
         self.__initialize_machines()
-        self.voip_adapter = self.voip_machine.adapter
+        self.__initialize_adapters()
 
     def __initialize_machines(self):
         self.voip_machine = VoipStateMachine()
@@ -32,6 +32,12 @@ class NetworkUserApi(object):
         self.gaming_machine = GamingStateMachine()
         self.lstreaming_machine = LStreamingStateMachine()
 
+    def __initialize_adapters(self):
+        self.voip_adapter = self.voip_machine.adapter
+        self.dash_adapter = self.dash_machine.adapter
+        self.gaming_adapter = self.gaming_machine.adapter
+        self.lstreaming_adapter = self.lstreaming_machine.adapter
+        
     def dash(self):
         """
         Translate parameters related to Dynamic Adaptive Streaming 
@@ -40,18 +46,20 @@ class NetworkUserApi(object):
 
         It considers mostly the bandwidth (for video quality) | download speed.
         """
-        pass
+        self.dash_adapter.update_data()
+        return self.dash_adapter.data
 
-    def streaming(self):
+    def lstreaming(self):
         """
         Translate parameters related to HTTP Live Streaming (HLS)
         It uses Twitch and Youtube as an example
 
         It considers mostly the packet loss and the upload speed.
         """
-        pass
+        self.lstreaming_adapter.update_data()
+        return self.lstreaming_adapter.data
 
-    def gamming(self):
+    def gaming(self):
         """
         Translate parameters related to Gamming.
         It uses League of Legends and Dota2 as an example
@@ -59,7 +67,8 @@ class NetworkUserApi(object):
         It considers mostly the packet loss.
         It should consider either the human reaction time.
         """
-        pass
+        self.gaming_adapter.update_data()
+        return self.gaming_adapter.data
 
     def voip(self):
         """
@@ -70,11 +79,21 @@ class NetworkUserApi(object):
         If using video too, it should consider the bandwidth also.
         """
         self.voip_adapter.update_data()
-        return json.dumps(self.voip_adapter.data)
+        return self.voip_adapter.data
 
-    def update_graphic(self):
-        return "Olá professora! Esta funcionalidade ainda não está implementada, mas logo estará :)"
-    
+    def get_images(self):
+        data = dict(
+            voip=self.voip(),
+            gaming=self.gaming(),
+            lstreaming=self.lstreaming(),
+            dash=self.dash()
+        )
+        for _, elem in data.items():
+            del elem['content']
+
+        LOGGER.debug(data)
+        return data
+
     def recent_data(self):
         self.gaming_machine.update()
         self.voip_machine.update()

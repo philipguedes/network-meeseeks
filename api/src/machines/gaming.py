@@ -55,12 +55,12 @@ class GamingStateMachine(object):
         """
         Get recent data
         """
-        self.recent_time, self.recent_data = self.adapter.get_recent_data()
+        self.recent_time, self.recent_data = self.adapter.get_recent_content()
         self.compute_statistics()
         LOGGER.debug('Measuring...')
 
     def compute_statistics(self):
-        data = self.adapter.get_data()
+        data = self.adapter.get_content()
         acc = 0
         for _,elem in data.items():
             acc += elem['latency']

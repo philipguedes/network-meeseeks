@@ -44,14 +44,14 @@ class LStreamingStateMachine(object):
             'dest': LS_STATES['D'],
             'conditions': ['up_to_720'],
             'unless': [
-                'freeze'
+                'freeze',
                 'up_to_1080']},
         {'trigger': 'update',
             'source': '*',
             'dest': LS_STATES['E'],
             'conditions': ['up_to_480'],
             'unless': [
-                'freeze'
+                'freeze',
                 'up_to_720']},
         {'trigger': 'update',
             'source': '*',
@@ -82,7 +82,7 @@ class LStreamingStateMachine(object):
         """
         Get recent data
         """
-        self.recent_time, self.recent_data = self.adapter.get_recent_data()
+        self.recent_time, self.recent_data = self.adapter.get_recent_content()
         LOGGER.debug('Measuring...')
 
     def freeze(self):
@@ -98,19 +98,19 @@ class LStreamingStateMachine(object):
         https://support.google.com/youtube/answer/2853702?hl=en&ref_topic=6136989
         """
         # TODO: convert to upload speed to kbps
-        return self.recent_data['upload'] >= 18000
+        return self.recent_data['upload'] >= 18
 
     def up_to_1080(self):
-        return self.recent_data['upload'] >= 9000
+        return self.recent_data['upload'] >= 9
 
     def up_to_720(self):
-        return self.recent_data['upload'] >= 4000
+        return self.recent_data['upload'] >= 4
 
     def up_to_480(self):
-        return self.recent_data['upload'] >= 2000
+        return self.recent_data['upload'] >= 2
 
     def up_to_360(self):
-        return self.recent_data['upload'] >= 1000
+        return self.recent_data['upload'] >= 1
 
     def up_to_240(self):
-        return self.recent_data['upload'] > 700
+        return self.recent_data['upload'] > 0.7

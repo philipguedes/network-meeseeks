@@ -5,20 +5,19 @@ from src.utils import get_logger
 
 
 LOGGER = get_logger(__name__)
-BYTES_TO_MEGABITS = 128 * 1024 
 
 
 class DashAdapter(BaseAdapter):
     def __init__(self):
         BaseAdapter.__init__(self)
         self.__figure = None
-        
+
     @property
     def data(self):
         return self.__data
 
     def update_data(self):
-        content = self.get_data()
+        content = self.get_content()
         updated = dt.now()
 
         self.__data = {
@@ -32,19 +31,50 @@ class DashAdapter(BaseAdapter):
             return self.__get_figure_updated()
         return self.__figure
 
-
     def __get_figure_updated(self):
-        data = self.get_data()
+        data = self.get_content()
         x, y = [], []
 
         od = collections.OrderedDict(sorted(data.items()))
         for timestamp, elem in od.items():
             x.append(dt.fromtimestamp(timestamp))
-            y.append(elem['goodput']/BYTES_TO_MEGABITS)
+            y.append(elem['goodput'])
 
-        trace = self.graphics.scatter_trace(x, y)
-        self.__figure = self.graphics.render_figure([trace])
+        my_trace = self.graphics.scatter_trace(x, y, name="Download Speed")
 
+        layout = self.get_layout()
+        traces = []
+        traces.append(my_trace)
+
+        self.__figure = self.graphics.render_figure(traces, layout=layout)
+
+        LOGGER.debug('TODO: FIX THIS PLOT')
         LOGGER.debug('new figure: ' + str(self.__figure))
 
         return self.__figure
+
+    def get_layout(self):
+        kwargs = {
+            'title': "Download speed across the time",
+            'titlefont': dict(
+                family='Courier New, monospace',
+                size=18
+            ),
+            'yaxis': dict(
+                title='Download speed (Megabits per second)',
+                titlefont=dict(
+                    family='Courier New, monospace',
+                    size=18
+                ),
+                ticksuffix='Mbps'
+            ),
+            'xaxis': dict(
+                title='Date',
+                titlefont=dict(
+                    family='Courier New, monospace',
+                    size=18
+                )
+            )
+
+        }
+        return self.graphics.create_layout(**kwargs)

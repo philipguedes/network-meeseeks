@@ -63,6 +63,15 @@ class NeubotService(object):
 
     @make_request('/data?test=speedtest')
     def speedtest_data(self, **kwargs):
+        """
+        Returns:
+        upload_speed: bytes/s
+        download_speed: bytes/s
+        latency: seconds
+        rtt: seconds
+
+        """
+
         data = kwargs.get('data')
         dataset = {}
         for elem in data:

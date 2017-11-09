@@ -1,6 +1,7 @@
 'use-strict'
 
 const zerorpc = require('zerorpc')
+var _ = require('lodash')
 // var client = new zerorpc.Client()
 
 // client.connect("tcp://127.0.0.1:4242")
@@ -11,19 +12,46 @@ class ApiController {
 
   constructor () {
     this.client = new zerorpc.Client();
-    this.apiRoute = 
     this.client.connect("tcp://127.0.0.1:4242");
+    // this.routes = 
+  }
+  
+  updateImage(route) {
+    var routes = ['voip', 'gaming', 'dash', 'lstreaming']
+    return new Promise ((resolve, reject) => {
+      if (_.includes(routes, route)) {
+        this.client.invoke(route, (error, res) => {
+          if (error) {
+            console.log(error);
+            reject(error)
+          }
+          else {
+            console.log('new figures omg')
+            resolve(res)
+          }
+
+        });
+      }
+      else {
+        console.log('invalid route')
+        reject('Not a valid route')
+      }
+    });
+
+    console.log(found)
   }
 
   getImages() {
     return new Promise ((resolve, reject) => {
-      this.client.invoke("voip", (error, res) => {
+      this.client.invoke("get_images", (error, res) => {
         if (error) {
           console.log(error);
+          reject(error);
         }
         else {
-          console.log('heeeeey')
-          console.log(res);
+          console.log('new figures omg')
+          // console.log(res);
+          resolve(res);
         }
 
       });

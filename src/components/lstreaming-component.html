@@ -21,8 +21,8 @@
         font-family: sans-serif;
       }
       paper-card {
-        /* height: 600px; */
-        /* width: 600px; */
+        height:800px; 
+        width: 800px;
         margin: 16px;
       }
       card-content {
@@ -33,14 +33,18 @@
       h2 {
         margin: 0.37em;
       }
+      iframe {
+        height: 480px;
+        width: 768px;
+      }
     </style>
     
-    <paper-card style="height:800px; width: 800px;">
+    <paper-card>
       <div class="card-header">
-        <h2>Grafico para gammers</h2>
+        <h2>Streaming</h2>
       </div>
       <div class="card-content">
-        <iframe src="./api/voip.html" style="height:600px; width: 600px;"></iframe>
+        <iframe src="{{image}}"></iframe>
         <p>Alguma informação relevante para o usuário</p>
       </div>
     </paper-card>
@@ -49,6 +53,17 @@
     class LstreamingComponent extends Polymer.Element {
       static get is() { return 'lstreaming-component'; }
       static get properties() {
+        return {
+          image: {
+            type: String,
+            notify: true
+          }
+        }
+      }
+
+      ready() {
+        super.ready()
+        
       }
     }
     customElements.define(LstreamingComponent.is, LstreamingComponent);

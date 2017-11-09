@@ -89,7 +89,7 @@ class VoipStateMachine(object):
         download > 100kbps
         upload > 100 kbps
         """
-        self.recent_time, self.recent_data = self.adapter.get_recent_data()
+        self.recent_time, self.recent_data = self.adapter.get_recent_content()
         LOGGER.debug('Measuring...')
 
     def freeze(self):
@@ -100,15 +100,15 @@ class VoipStateMachine(object):
 
     def delay(self):
         """
-        Returns True if latency > 300ms
+        Returns True if latency > 0.3s
         """
-        return self.recent_data['latency'] > 300
+        return self.recent_data['latency'] > 0.3
 
     def connect_issue(self):
         """
         Returns True if bandwidth (upload/download) < 100kbps (convert to kbps)
         """
-        return self.recent_data['goodput'] < 100
+        return self.recent_data['goodput'] < 0.1
 
     def get_figure(self):
         return self.adapter.get_figure()

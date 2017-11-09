@@ -30,6 +30,10 @@
         height: 600px;
         width: 600px;
       }
+      iframe {
+        height: 480px;
+        width: 768px;
+      }
       h2 {
         margin: 0.37em;
       }
@@ -40,7 +44,7 @@
         <h2>Gaming</h2>
       </div>
       <div class="card-content">
-        <iframe src="./api/voip.html" style="height:600px; width: 600px;"></iframe>
+        <iframe src="{{image}}"></iframe>
         <p>Alguma informação relevante para o usuário</p>
       </div>
     </paper-card>
@@ -49,6 +53,17 @@
     class GamingComponent extends Polymer.Element {
       static get is() { return 'gaming-component'; }
       static get properties() {
+        return {
+          image: {
+            type: String,
+            notify: true
+          }
+        }
+      }
+
+      ready() {
+        super.ready()
+        
       }
     }
     customElements.define(GamingComponent.is, GamingComponent);

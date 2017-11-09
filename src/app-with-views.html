@@ -16,6 +16,11 @@
 <link rel="import" href="main-view.html">
 <link rel="import" href="./components/presenter-component.html">
 <link rel="import" href="./components/gaming-component.html">
+<link rel="import" href="./components/dash-component.html">
+<link rel="import" href="./components/voip-component.html">
+<link rel="import" href="./components/lstreaming-component.html">
+
+
 <!-- <link rel="lazy-import" href="my-view404.html"> -->
 
 
@@ -67,8 +72,9 @@
       
       </app-drawer> -->
 
-      <app-header-layout has-scrolling-region>
-        <app-header fixed>
+      <app-header-layout>
+          <app-header slot="header" fixed condenses effects="parallax-background">
+        <!-- <app-header condensed> -->
           <app-toolbar>
               <template is="dom-if" if="[[back]]">
 
@@ -78,16 +84,13 @@
 
               </template>
               
-              <div main-title>Mr. Meeseeks</div>
+              <div id="main-title" main-title>Mr. Meeseeks</div>
 <!--               
               <paper-icon-button icon="delete"></paper-icon-button>
               <paper-icon-button icon="search"></paper-icon-button>
               <paper-icon-button icon="close"></paper-icon-button> -->
           </app-toolbar>
         </app-header>
-      
-      <paper-button raised on-click="_loadImages">oie</paper-button>
-      
 
         <iron-pages
           selected="[[page]]"
@@ -97,10 +100,10 @@
           
           <!-- <main-view name='main-view' voip=[[voip]] dash=[[dash]] lstreaming=[[lstreaming]] gaming=[[gaming]]></main-view> -->
           <main-view name='main-view'></main-view>
-          <presenter-component name='voip-detail'></presenter-component>
-          <presenter-component name='dash-detail'></presenter-component>
-          <presenter-component name='lstreaming-detail'></presenter-component>
-          <gaming-component name='gaming-component'></gaming-component>
+          <voip-component image="{{voipImage}}" name='voip-component'></voip-component>
+          <dash-component image="{{dashImage}}" name='dash-component'></dash-component>
+          <lstreaming-component image="{{lstreamingImage}}"name='lstreaming-component'></lstreaming-component>
+          <gaming-component image="{{gamingImage}}" name='gaming-component'></gaming-component>
           <!-- <my-view1 name="my-view1"></my-view1>
           <my-view2 name="my-view2"></my-view2> -->
         </iron-pages>
@@ -118,22 +121,22 @@
       static get is() { return 'rss-app' }
       static get properties() {
         return {
-          // voip: {
-          //   type: String,
-          //   notify: true
-          // },
-          // dash: {
-          //   type: String,
-          //   notify: true
-          // },
-          // gaming: {
-          //   type: String,
-          //   notify: true
-          // },
-          // lstreaming: {
-          //   type: String,
-          //   notify: true
-          // },
+          voipImage: {
+            type: String,
+            notify: true
+          },
+          dashImage: {
+            type: String,
+            notify: true
+          },
+          gamingImage: {
+            type: String,
+            notify: true
+          },
+          lstreamingImage: {
+            type: String,
+            notify: true
+          },
           images: {
             type: Object,
             notify: true
@@ -170,7 +173,7 @@
         this._loadImages()
         console.log(this.routeData)
       }
-      
+
       // _loadStatistics() {
       //   api.loadStatistics().then((res) => {
       //     this.set('last_update', res['last_update']);
@@ -186,8 +189,16 @@
         api.getImages().then((res) => {
           console.log('hello')
           console.log(res)
-          this.set(images, res);
+          this.set('images', res);
+          this._fetchImages();
         });
+      }
+
+      _fetchImages() {
+        this.set('gamingImage', this.images.gaming.figure)
+        this.set('voipImage', this.images.voip.figure)
+        this.set('dashImage', this.images.dash.figure)
+        this.set('lstreamingImage', this.images.lstreaming.figure)
       }
 
       _prepareUpdate(e) {
@@ -197,8 +208,10 @@
         this.set('page', data['page']);
 
         console.log('this is my test yay')
-        console.log(e)
-        this.set('page', 'gaming-component')
+  
+
+        // console.log(this.$$('.mainTitle)
+        // this.set('page', 'gaming-component')
         // this._loadStatistics()
         // this.set('page', 'presenter-component')
       }

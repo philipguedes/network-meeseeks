@@ -40,7 +40,7 @@ class GraphicsService(object):
         path = py.plot(
             figure, 
             filename=filename, 
-            # auto_open=False,
+            auto_open=False,
             image_height=480,
             image_width=640)
 

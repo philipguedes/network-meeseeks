@@ -67,13 +67,14 @@ class DashStateMachine(object):
         """
         Get recent data
         """
-        self.recent_time, self.recent_data = self.adapter.get_recent_data()
+        self.recent_time, self.recent_data = self.adapter.get_recent_content()
         LOGGER.debug('Measuring...')
 
     def less_than_minimum(self):
-        # TODO: convert to Megabits/second
         """
         This state machine follows the Netflix requirements
+
+        The numbers are currently in Mbps
 
         https://help.netflix.com/en/node/306
         """

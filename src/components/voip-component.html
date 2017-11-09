@@ -21,8 +21,8 @@
         font-family: sans-serif;
       }
       paper-card {
-        /* height: 600px; */
-        /* width: 600px; */
+        height:800px; 
+        width: 800px;
         margin: 16px;
       }
       card-content {
@@ -30,17 +30,21 @@
         height: 600px;
         width: 600px;
       }
+      iframe {
+        height: 480px;
+        width: 768px;
+      }
       h2 {
         margin: 0.37em;
       }
     </style>
     
-    <paper-card style="height:800px; width: 800px;">
+    <paper-card>
       <div class="card-header">
-        <h2>Grafico para gammers</h2>
+        <h2>Calls</h2>
       </div>
       <div class="card-content">
-        <iframe src="./api/voip.html" style="height:600px; width: 600px;"></iframe>
+        <iframe src="{{image}}"></iframe>
         <p>Alguma informação relevante para o usuário</p>
       </div>
     </paper-card>
@@ -58,14 +62,24 @@
         }
       }
 
+      
+      /*TODO: Criar observer para quando 
+        image mudar
+        que ai eu preciso dar reload no iframe mané
+
+        quando voltar amanha, da uma olhada no prepare update <<<
+      
+      */
+
       ready() {
         super.ready();
-        console.log(this.controller);
-        console.log(controller)
-        this._loadImage()
+        // console.log(this.controller);
+        // console.log(controller)
+        // this._loadImage()
       }
       
-      _loadImage() {
+      reloadImage() {
+        api.getImages
       }
       
       updateImage() {
